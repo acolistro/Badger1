@@ -66,6 +66,8 @@ dependencies {
     // Room components
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     kapt(libs.androidx.room.compiler)
 
     // Coroutines and Activity KTX

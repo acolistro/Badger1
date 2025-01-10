@@ -3,7 +3,7 @@ package com.example.badger1
 import org.junit.Before
 import org.junit.Rule
 
-class BaseTest {
+abstract class BaseTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
