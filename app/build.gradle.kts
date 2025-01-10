@@ -72,4 +72,22 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.ktx)
 
+    // Testing Dependencies
+    // Unit Tests
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.app.cash.turbine)
+    testImplementation(libs.mockk)
+
+    // Android Tests
+    androidTestImplementation(libs.androidx.test.ext)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.google.truth)
+
+
 }
