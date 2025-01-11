@@ -2,37 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.example.myapp.ui.splash.SplashFragment"
-        android:label="SplashFragment">
-        <action
-            android:id="@+id/action_splash_to_login"
-            app:destination="@id/loginFragment" />
-    </fragment>
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.myapp.ui.auth.LoginFragment"
+        android:name="com.example.badger.ui.fragment.LoginFragment"
         android:label="LoginFragment">
         <action
-            android:id="@+id/action_login_to_dashboard"
-            app:destination="@id/dashboardFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_login_to_register"
-            app:destination="@id/registerFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.example.myapp.ui.auth.RegisterFragment"
-        android:label="RegisterFragment">
-        <action
-            android:id="@+id/action_register_to_dashboard"
+            android:id="@+id/action_loginFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
@@ -40,31 +17,20 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.example.myapp.ui.dashboard.DashboardFragment"
+        android:name="com.example.badger.ui.fragment.DashboardFragment"
         android:label="DashboardFragment">
         <action
-            android:id="@+id/action_dashboard_to_createList"
-            app:destination="@id/createListFragment" />
-        <action
-            android:id="@+id/action_dashboard_to_listDetail"
-            app:destination="@id/listDetailFragment" />
+            android:id="@+id/action_dashboard_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/createListFragment"
-        android:name="com.example.myapp.ui.list.CreateListFragment"
-        android:label="CreateListFragment">
-        <action
-            android:id="@+id/action_createList_to_listDetail"
-            app:destination="@id/listDetailFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/listDetailFragment"
-        android:name="com.example.myapp.ui.list.ListDetailFragment"
-        android:label="ListDetailFragment">
+        android:id="@+id/listFragment"
+        android:name="com.example.badger.ui.fragment.ListFragment"
+        android:label="ListFragment">
         <argument
             android:name="listId"
             app:argType="string" />
     </fragment>
+
 </navigation>
