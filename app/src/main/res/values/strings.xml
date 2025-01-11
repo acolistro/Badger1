@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Badger</string>
     <string name="default_web_client_id">842323151021-eehs51854ttmk9mus8fravakl1ran76q.apps.googleusercontent.com</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
