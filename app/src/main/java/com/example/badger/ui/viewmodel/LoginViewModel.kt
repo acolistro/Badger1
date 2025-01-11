@@ -3,6 +3,8 @@ package com.example.badger.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.badger.data.repository.UserRepository
+import com.example.badger.ui.state.LoginUiState
+import com.example.badger.ui.event.LoginEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,14 +62,4 @@ class LoginViewModel @Inject constructor(
     fun resetError() {
         _uiState.value = LoginUiState.Initial
     }
-}
-
-sealed class LoginUiState {
-    data object Initial : LoginUiState()
-    data object Loading : LoginUiState()
-    data class Error(val message: String) : LoginUiState()
-}
-
-sealed class LoginEvent {
-    data object NavigateToDashboard : LoginEvent()
 }
