@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Badger 1</string>
+    <string name="default_web_client_id">YOUR-WEB-CLIENT-ID</string>
 </resources>

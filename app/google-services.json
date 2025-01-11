@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "842323151021",
+    "project_id": "badger-77f56",
+    "storage_bucket": "badger-77f56.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842323151021:android:fbfd1edb0ea491d544de24",
+        "android_client_info": {
+          "package_name": "com.example.badger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg8raF80Uqai3iGAQJv7dxszM0oS80xLk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

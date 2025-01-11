@@ -2,14 +2,16 @@ plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.badger1"
+    namespace = "com.example.badger"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.badger1"
+        applicationId = "com.example.badger"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -19,6 +21,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 
     buildTypes {
@@ -37,17 +43,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
 }
 
 dependencies {
@@ -57,6 +53,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
+
+    //Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // Lifecycle components
     implementation(libs.androidx.lifecycle.viewmodel)
@@ -73,6 +72,27 @@ dependencies {
     // Coroutines and Activity KTX
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.ktx)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+    // For Hilt with View Model
+    implementation(libs.androidx.hilt.navigation.fragment)
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+
+    // Google Play Services Auth
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // Testing Dependencies
     // Unit Tests
