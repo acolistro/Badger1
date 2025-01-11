@@ -57,18 +57,20 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     //Gson
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.gson)
 
     // Lifecycle components
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.lifecycle.extensions)
 
     // Room components
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.activity)
     kapt(libs.androidx.room.compiler)
 
     // Coroutines and Activity KTX
