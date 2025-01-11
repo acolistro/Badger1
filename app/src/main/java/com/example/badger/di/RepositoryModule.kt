@@ -4,8 +4,8 @@ import com.example.badger.data.local.dao.ListDao
 import com.example.badger.data.repository.ListRepository
 import com.example.badger.data.repository.UserRepository
 import com.example.badger.data.local.dao.UserDao
-import com.example.badger.data.remote.FirebaseDataSource
 import com.example.badger.data.remote.RemoteDataSource
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,8 +29,8 @@ object RepositoryModule {
     @Singleton
     fun provideUserRepository(
         userDao: UserDao,
-        remoteDataSource: RemoteDataSource
+        auth: FirebaseAuth
     ): UserRepository {
-        return UserRepository(userDao, remoteDataSource)
+        return UserRepository(userDao, auth)
     }
 }

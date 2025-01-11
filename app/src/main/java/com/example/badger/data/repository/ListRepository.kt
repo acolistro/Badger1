@@ -9,28 +9,39 @@ import javax.inject.Inject
 
 class ListRepository @Inject constructor(
     private val listDao: ListDao,
-  //  private val itemDao: ListItemDao,
     private val remoteDataSource: RemoteDataSource,
-//    private val firebaseDataSource: FirebaseDataSource
 ) {
     suspend fun createList(title: String): Result<SharedList> {
+        return remoteDataSource.createList(title)
+    }
+
+    fun getFavoriteLists(userId: String): Flow<List<SharedList>> {
+        return listDao.getFavoriteLists()
+            .map { lists -> lists.map { it.toDomain() } }
+    }
+
+    suspend fun toggleFavorite(listId: String, favorite: Boolean): Result<Unit> {
+        // Check if we're trying to add a favorite
+        if (favorite) {
+            // Get current favorite count
+            val currentFavorites = listDao.getFavoriteListsCount()
+            if (currentFavorites >= 3) {
+                return Result.failure(Exception("Maximum of 3 favorite lists allowed"))
+            }
+        }
+
         return try {
-            val list = remoteDataSource.createList(title)
-            //listDao.insertList(list.toEntity())
-            Result.success(list)
+            // Update local database
+            listDao.updateFavorite(listId, favorite)
+            // Update remote
+            remoteDataSource.updateFavorite(listId, favorite)
+            Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-//    fun getFavoriteLists(): Flow<List<SharedList>> {
-//        return listDao.getFavoriteLists()
-//            .map { lists -> lists.map { it.toDomain() } }
-//    }
-
-    suspend fun toggleFavorite(listId: String, favorite: Boolean) {
-       // listDao.updateFavorite(listId, favorite)
-        remoteDataSource.updateFavorite(listId, favorite)
+    suspend fun getFavoriteListsCount(): Int {
+        return listDao.getFavoriteListsCount()
     }
-
 }
