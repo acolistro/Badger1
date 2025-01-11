@@ -11,7 +11,3 @@ data class SharedList(
     val items: List<ListItem>,
     val isFavorite: Boolean
 )
-
-enum class Priority {
-    LOW, NORMAL, HIGH, URGENT
-}
