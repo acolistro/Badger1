@@ -27,7 +27,7 @@ object AuthModule {
     @Singleton
     fun provideGoogleSignInClient(@ApplicationContext context: Context): GoogleSignInClient {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            //TODO add client id
+            //TODO hide token
             .requestIdToken(context.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()

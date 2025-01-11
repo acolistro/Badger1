@@ -12,7 +12,12 @@
           "package_name": "com.example.badger"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "842323151021-eehs51854ttmk9mus8fravakl1ran76q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAg8raF80Uqai3iGAQJv7dxszM0oS80xLk"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842323151021-eehs51854ttmk9mus8fravakl1ran76q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

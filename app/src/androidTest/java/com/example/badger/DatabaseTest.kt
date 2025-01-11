@@ -14,7 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.badger.data.local.BadgerDatabase
-import com.example.badger1.R
+import com.example.badger.R
 import com.google.common.truth.Truth.assertThat
 
 import kotlinx.coroutines.test.runTest
