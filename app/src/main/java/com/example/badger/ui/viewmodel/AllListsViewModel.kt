@@ -26,6 +26,19 @@ class AllListsViewModel @Inject constructor(
         loadLists()
     }
 
+    fun toggleFavorite(listId: String, favorite: Boolean) {
+        viewModelScope.launch {
+            try {
+                listRepository.toggleFavorite(listId, favorite)
+                    .onFailure { error ->
+                        _uiState.value = AllListsUiState.Error(error.message ?: "Failed to update favorite")
+                    }
+            } catch (e: Exception) {
+                _uiState.value = AllListsUiState.Error(e.message ?: "Failed to update favorite")
+            }
+        }
+    }
+
     private fun loadLists() {
         viewModelScope.launch {
             try {
@@ -34,15 +47,14 @@ class AllListsViewModel @Inject constructor(
                     return@launch
                 }
 
-                // TODO: Implement getLists() in ListRepository
-                // listRepository.getLists(currentUser.id)
-                //     .onStart { _uiState.value = AllListsUiState.Loading }
-                //     .catch { error ->
-                //         _uiState.value = AllListsUiState.Error(error.message ?: "Failed to load lists")
-                //     }
-                //     .collect { lists ->
-                //         _uiState.value = AllListsUiState.Success(lists)
-                //     }
+                listRepository.getAllLists(currentUser.id)
+                    .onStart { _uiState.value = AllListsUiState.Loading }
+                    .catch { error ->
+                        _uiState.value = AllListsUiState.Error(error.message ?: "Failed to load lists")
+                    }
+                    .collect { lists ->
+                        _uiState.value = AllListsUiState.Success(lists)
+                    }
             } catch (e: Exception) {
                 _uiState.value = AllListsUiState.Error(e.message ?: "Unknown error occurred")
             }
@@ -58,6 +70,12 @@ class AllListsViewModel @Inject constructor(
             _events.emit(AllListsEvent.NavigateToList(listId))
         }
     }
+
+    fun createNewList() {
+        viewModelScope.launch {
+            _events.emit(AllListsEvent.NavigateToCreateList)
+        }
+    }
 }
 
 sealed class AllListsUiState {
@@ -68,5 +86,6 @@ sealed class AllListsUiState {
 
 sealed class AllListsEvent {
     data object NavigateToLogin : AllListsEvent()
+    data object NavigateToCreateList : AllListsEvent()
     data class NavigateToList(val listId: String) : AllListsEvent()
 }
