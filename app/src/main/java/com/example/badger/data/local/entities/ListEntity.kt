@@ -2,10 +2,13 @@ package com.example.badger.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.badger.data.local.utils.Converters
 import com.example.badger.data.model.ListItem
 import com.example.badger.data.model.SharedList
 
 @Entity(tableName = "lists")
+@TypeConverters(Converters::class)
 data class ListEntity(
     @PrimaryKey
     val id: String,
