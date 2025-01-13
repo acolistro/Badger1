@@ -20,9 +20,31 @@
         android:name="com.example.badger.ui.fragment.DashboardFragment"
         android:label="DashboardFragment">
         <action
-            android:id="@+id/action_dashboard_to_listFragment"
+            android:id="@+id/action_dashboardFragment_to_createListFragment"
+            app:destination="@id/createListFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_listFragment"
             app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_allListsFragment"
+            app:destination="@id/allListsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/createListFragment"
+        android:name="com.example.badger.ui.fragment.CreateListFragment"
+        android:label="CreateListFragment" />
 
     <fragment
         android:id="@+id/listFragment"
@@ -32,5 +54,20 @@
             android:name="listId"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/allListsFragment"
+        android:name="com.example.badger.ui.fragment.AllListsFragment"
+        android:label="AllListsFragment" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.badger.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.badger.ui.fragment.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>
