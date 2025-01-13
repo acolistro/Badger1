@@ -53,6 +53,17 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    fun signOut() {
+        viewModelScope.launch {
+            try {
+                userRepository.signOut()
+                _events.emit(DashboardEvent.NavigateToLogin)
+            } catch (e: Exception) {
+                _uiState.value = DashboardUiState.Error(e.message ?: "Failed to sign out")
+            }
+        }
+    }
+
     fun toggleFavorite(listId: String, favorite: Boolean) {
         viewModelScope.launch {
             try {

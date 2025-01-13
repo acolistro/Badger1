@@ -94,6 +94,11 @@ class AllListsFragment : Fragment() {
                                 AllListsFragmentDirections.actionAllListsFragmentToLoginFragment()
                             )
                         }
+                        is AllListsEvent.NavigateToCreateList -> {
+                            findNavController().navigate(
+                                AllListsFragmentDirections.actionAllListsFragmentToCreateListFragment()
+                            )
+                        }
                         is AllListsEvent.NavigateToList -> {
                             findNavController().navigate(
                                 AllListsFragmentDirections.actionAllListsFragmentToListFragment(event.listId)
