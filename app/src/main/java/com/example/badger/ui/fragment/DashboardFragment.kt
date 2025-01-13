@@ -21,7 +21,6 @@ import com.example.badger.ui.adapter.ListAdapter
 import com.example.badger.ui.viewmodel.DashboardEvent
 import com.example.badger.ui.viewmodel.DashboardUiState
 import com.example.badger.ui.viewmodel.DashboardViewModel
-import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

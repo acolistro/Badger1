@@ -1,5 +1,7 @@
 package com.example.badger.data.model
 
+import com.example.badger.data.local.entities.ListEntity
+
 data class SharedList(
     val id: String,
     val title: String,
@@ -10,4 +12,6 @@ data class SharedList(
     val sharedWithUsers: List<String>,
     val items: List<ListItem>,
     val isFavorite: Boolean
-)
+) {
+    fun toEntity() = ListEntity.fromDomain(this)
+}
