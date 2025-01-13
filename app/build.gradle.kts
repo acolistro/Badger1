@@ -98,6 +98,9 @@ dependencies {
     // Google Play Services Auth
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+    // UI
+    implementation(libs.androidx.swiperefreshlayout)
+
     // Testing Dependencies
     // Unit Tests
     testImplementation(libs.junit)
