@@ -16,6 +16,7 @@ import com.example.badger.databinding.FragmentLoginBinding
 import com.example.badger.ui.state.LoginUiState
 import com.example.badger.ui.event.LoginEvent
 import com.example.badger.ui.viewmodel.LoginViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -47,47 +48,64 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.loginButton.setOnClickListener {
-            val email = binding.emailEditText.text?.toString()?.trim() ?: ""
-            val password = binding.passwordEditText.text?.toString()?.trim() ?: ""
+        with(binding) {
+            loginButton.setOnClickListener {
+                val email = emailEditText.text?.toString()?.trim() ?: ""
+                val password = passwordEditText.text?.toString()?.trim() ?: ""
 
-            if (validateInput(email, password)) {
-                viewModel.login(email, password)
+                if (validateInput(email, password)) {
+                    viewModel.login(email, password)
+                }
             }
-        }
 
-        binding.signUpButton.setOnClickListener {
-            val email = binding.emailEditText.text?.toString()?.trim() ?: ""
-            val password = binding.passwordEditText.text?.toString()?.trim() ?: ""
+            signUpButton.setOnClickListener {
+                viewModel.navigateToSignUp()
+            }
 
-            if (validateInput(email, password)) {
-                viewModel.signUp(email, password)
+            forgotPasswordButton.setOnClickListener {
+                viewModel.navigateToForgotPassword()
             }
         }
     }
 
     private fun validateInput(email: String, password: String): Boolean {
-        if (email.isEmpty()) {
-            binding.emailLayout.error = "Email is required"
-            return false
-        }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.emailLayout.error = "Invalid email format"
-            return false
-        }
-        binding.emailLayout.error = null
+        with(binding) {
+            if (email.isEmpty()) {
+                emailLayout.error = "Email is required"
+                return false
+            }
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailLayout.error = "Invalid email format"
+                return false
+            }
+            emailLayout.error = null
 
-        if (password.isEmpty()) {
-            binding.passwordLayout.error = "Password is required"
-            return false
-        }
-        if (password.length < 6) {
-            binding.passwordLayout.error = "Password must be at least 6 characters"
-            return false
-        }
-        binding.passwordLayout.error = null
+            if (password.isEmpty()) {
+                passwordLayout.error = "Password is required"
+                return false
+            }
+            if (password.length < 6) {
+                passwordLayout.error = "Password must be at least 6 characters"
+                return false
+            }
+            passwordLayout.error = null
 
-        return true
+            return true
+        }
+    }
+
+    private fun showVerificationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Email Verification Required")
+            .setMessage("Please verify your email address. Check your inbox for the verification link.")
+            .setPositiveButton("Check Status") { _, _ ->
+                viewModel.checkVerificationStatus()
+            }
+            .setNegativeButton("Resend Email") { _, _ ->
+                viewModel.resendVerificationEmail()
+            }
+            .setNeutralButton("Cancel", null)
+            .show()
     }
 
     private fun observeUiState() {
@@ -99,7 +117,13 @@ class LoginFragment : Fragment() {
                             Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
                             viewModel.resetError()
                         }
-                        else -> { /* Other states are handled by data binding */ }
+                        is LoginUiState.VerificationRequired -> {
+                            showVerificationDialog()
+                        }
+                        is LoginUiState.VerificationEmailSent -> {
+                            Toast.makeText(context, "Verification email sent", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> { /* Other states handled by data binding */ }
                     }
                 }
             }
@@ -113,6 +137,12 @@ class LoginFragment : Fragment() {
                     when (event) {
                         is LoginEvent.NavigateToDashboard -> {
                             findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
+                        }
+                        is LoginEvent.NavigateToSignUp -> {
+                            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+                        }
+                        is LoginEvent.NavigateToForgotPassword -> {
+                            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
                         }
                     }
                 }

@@ -23,7 +23,10 @@ object DatabaseModule {
             context,
             BadgerDatabase::class.java,
             "badger_database"
-        ).build()
+        )
+            .addMigrations(BadgerDatabase.MIGRATION_1_2)  // Add migration
+            .fallbackToDestructiveMigration() //allow database recreation
+            .build()
     }
 
     @Provides
