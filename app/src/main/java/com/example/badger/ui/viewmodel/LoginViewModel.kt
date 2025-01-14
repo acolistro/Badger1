@@ -29,7 +29,11 @@ class LoginViewModel @Inject constructor(
             _uiState.value = LoginUiState.Loading
             try {
                 userRepository.signIn(email, password)
-                    .onSuccess {
+                    .onSuccess { user ->
+                        if (!user.emailVerified) {
+                            _uiState.value = LoginUiState.VerificationRequired
+                            return@launch
+                        }
                         _events.emit(LoginEvent.NavigateToDashboard)
                     }
                     .onFailure { exception ->
@@ -41,25 +45,51 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun signUp(email: String, password: String) {
+    fun checkVerificationStatus() {
         viewModelScope.launch {
-            _uiState.value = LoginUiState.Loading
             try {
-                val username = email.substringBefore('@') // Default username
-                userRepository.signUp(email, password, username)
+                userRepository.updateEmailVerificationStatus()
                     .onSuccess {
                         _events.emit(LoginEvent.NavigateToDashboard)
                     }
                     .onFailure { exception ->
-                        _uiState.value = LoginUiState.Error(exception.message ?: "Sign up failed")
+                        _uiState.value = LoginUiState.Error("Email not verified yet")
                     }
             } catch (e: Exception) {
-                _uiState.value = LoginUiState.Error(e.message ?: "Sign up failed")
+                _uiState.value = LoginUiState.Error(e.message ?: "Verification check failed")
+            }
+        }
+    }
+
+    fun resendVerificationEmail() {
+        viewModelScope.launch {
+            try {
+                userRepository.resendEmailVerification()
+                    .onSuccess {
+                        _uiState.value = LoginUiState.VerificationEmailSent
+                    }
+                    .onFailure { exception ->
+                        _uiState.value = LoginUiState.Error(exception.message ?: "Failed to resend verification email")
+                    }
+            } catch (e: Exception) {
+                _uiState.value = LoginUiState.Error(e.message ?: "Failed to resend verification email")
             }
         }
     }
 
     fun resetError() {
         _uiState.value = LoginUiState.Initial
+    }
+
+    fun navigateToSignUp() {
+        viewModelScope.launch {
+            _events.emit(LoginEvent.NavigateToSignUp)
+        }
+    }
+
+    fun navigateToForgotPassword() {
+        viewModelScope.launch {
+            _events.emit(LoginEvent.NavigateToForgotPassword)
+        }
     }
 }

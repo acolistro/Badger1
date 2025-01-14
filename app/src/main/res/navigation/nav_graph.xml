@@ -12,8 +12,25 @@
             android:id="@+id/action_loginFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.badger.ui.fragment.SignUpFragment"
+        android:label="Sign Up" />
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.badger.ui.fragment.ForgotPasswordFragment"
+        android:label="Forgot Password" />
 
     <fragment
         android:id="@+id/dashboardFragment"
