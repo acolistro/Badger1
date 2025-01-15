@@ -22,7 +22,8 @@ class UserRepository @Inject constructor(
     // Auth Methods
     suspend fun signIn(email: String, password: String): Result<User> = runCatching {
         val authResult = auth.signInWithEmailAndPassword(email, password).await()
-        val firebaseUser = authResult.user ?: throw IllegalStateException("Sign in succeeded but user is null")
+        val firebaseUser =
+            authResult.user ?: throw IllegalStateException("Sign in succeeded but user is null")
         createOrUpdateUser(firebaseUser)
     }
 
@@ -35,7 +36,8 @@ class UserRepository @Inject constructor(
         phone: String
     ): Result<User> = runCatching {
         val authResult = auth.createUserWithEmailAndPassword(email, password).await()
-        val firebaseUser = authResult.user ?: throw IllegalStateException("Sign up succeeded but user is null")
+        val firebaseUser =
+            authResult.user ?: throw IllegalStateException("Sign up succeeded but user is null")
 
         val newUser = User(
             id = firebaseUser.uid,
@@ -82,16 +84,12 @@ class UserRepository @Inject constructor(
                 phone = firestoreUser.getString("phone") ?: "",
                 emailVerified = firebaseUser.isEmailVerified,
                 phoneVerified = firestoreUser.getBoolean("phoneVerified") ?: false,
-                favoriteListIds = (firestoreUser.get("favoriteListIds") as? List<String>) ?: emptyList()
+                favoriteListIds = (firestoreUser.get("favoriteListIds") as? List<String>)
+                    ?: emptyList()
             )
             saveUser(newUser)
             newUser
         }
-    }
-
-    suspend fun resendEmailVerification(): Result<Unit> = runCatching {
-        val currentUser = auth.currentUser ?: throw IllegalStateException("No user is signed in")
-        currentUser.sendEmailVerification().await()
     }
 
     suspend fun checkEmailVerification(): Result<Boolean> = runCatching {
@@ -104,15 +102,6 @@ class UserRepository @Inject constructor(
         }
 
         isVerified
-    }
-
-    suspend fun updateVerificationStatus(userId: String, emailVerified: Boolean? = null, phoneVerified: Boolean? = null) {
-        val user = getUserById(userId) ?: return
-        val updatedUser = user.copy(
-            emailVerified = emailVerified ?: user.emailVerified,
-            phoneVerified = phoneVerified ?: user.phoneVerified
-        )
-        updateUser(updatedUser)
     }
 
     suspend fun sendPasswordResetEmail(email: String): Result<Unit> = runCatching {
@@ -193,4 +182,51 @@ class UserRepository @Inject constructor(
     suspend fun doesUserExist(email: String): Boolean {
         return userDao.doesUserExist(email)
     }
+
+    suspend fun updateVerificationStatus(
+        userId: String,
+        emailVerified: Boolean? = null,
+        phoneVerified: Boolean? = null
+    ) {
+        val user = getUserById(userId) ?: return
+        val updatedUser = user.copy(
+            emailVerified = emailVerified ?: user.emailVerified,
+            phoneVerified = phoneVerified ?: user.phoneVerified
+        )
+
+        // Update local database
+        userDao.updateUser(UserEntity.fromDomain(updatedUser))
+
+        // Update Firestore
+        val updates = mutableMapOf<String, Any>()
+        emailVerified?.let { updates["emailVerified"] = it }
+        phoneVerified?.let { updates["phoneVerified"] = it }
+
+        if (updates.isNotEmpty()) {
+            firestore.collection("users")
+                .document(userId)
+                .update(updates)
+                .await()
+        }
+    }
+
+    suspend fun updateEmailVerificationStatus(): Result<Boolean> = runCatching {
+        val currentUser = auth.currentUser ?: throw IllegalStateException("No user is signed in")
+        // Reload to get latest verification status
+        currentUser.reload().await()
+
+        val isVerified = currentUser.isEmailVerified
+        if (isVerified) {
+            // Use existing updateVerificationStatus method
+            updateVerificationStatus(currentUser.uid, emailVerified = true)
+        }
+
+        isVerified
+    }
+
+    suspend fun resendEmailVerification(): Result<Unit> = runCatching {
+        val currentUser = auth.currentUser ?: throw IllegalStateException("No user is signed in")
+        currentUser.sendEmailVerification().await()
+    }
 }
+

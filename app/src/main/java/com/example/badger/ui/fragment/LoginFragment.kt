@@ -97,7 +97,7 @@ class LoginFragment : Fragment() {
     private fun showVerificationDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Email Verification Required")
-            .setMessage("Please verify your email address. Check your inbox for the verification link.")
+            .setMessage("Please verify your email address before continuing. Check your inbox for the verification link.")
             .setPositiveButton("Check Status") { _, _ ->
                 viewModel.checkVerificationStatus()
             }
@@ -123,7 +123,9 @@ class LoginFragment : Fragment() {
                         is LoginUiState.VerificationEmailSent -> {
                             Toast.makeText(context, "Verification email sent", Toast.LENGTH_SHORT).show()
                         }
-                        else -> { /* Other states handled by data binding */ }
+                        else -> { /* Other states handled by data binding */
+                            binding.progressBar.visibility = View.GONE
+                        }
                     }
                 }
             }
