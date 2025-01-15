@@ -54,16 +54,16 @@ class LoginFragment : Fragment() {
                 val password = passwordEditText.text?.toString()?.trim() ?: ""
 
                 if (validateInput(email, password)) {
-                    viewModel.login(email, password)
+                    viewModel?.login(email, password)
                 }
             }
 
             signUpButton.setOnClickListener {
-                viewModel.navigateToSignUp()
+                viewModel?.navigateToSignUp()
             }
 
             forgotPasswordButton.setOnClickListener {
-                viewModel.navigateToForgotPassword()
+                viewModel?.navigateToForgotPassword()
             }
         }
     }
