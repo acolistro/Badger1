@@ -6,10 +6,12 @@ import com.example.badger.data.repository.UserRepository
 import com.example.badger.data.local.dao.UserDao
 import com.example.badger.data.remote.RemoteDataSource
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -29,8 +31,9 @@ object RepositoryModule {
     @Singleton
     fun provideUserRepository(
         userDao: UserDao,
-        auth: FirebaseAuth
+        @Named("auth") auth: FirebaseAuth,
+        firestore: FirebaseFirestore
     ): UserRepository {
-        return UserRepository(userDao, auth)
+        return UserRepository(userDao, auth, firestore)
     }
 }
