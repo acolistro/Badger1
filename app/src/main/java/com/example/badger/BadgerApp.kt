@@ -2,6 +2,7 @@ package com.example.badger
 
 import android.app.Application
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.initialize
 import dagger.hilt.android.HiltAndroidApp
 

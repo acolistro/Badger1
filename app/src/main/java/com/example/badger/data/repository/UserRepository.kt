@@ -228,5 +228,10 @@ class UserRepository @Inject constructor(
         val currentUser = auth.currentUser ?: throw IllegalStateException("No user is signed in")
         currentUser.sendEmailVerification().await()
     }
+
+    suspend fun signOut() = runCatching {
+        // Sign out from Firebase
+        auth.signOut()
+    }
 }
 
