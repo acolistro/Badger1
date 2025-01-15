@@ -99,11 +99,11 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-messaging-ktx")
-    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.storage.ktx)
 
     // Google Play Services Auth
     implementation("com.google.android.gms:play-services-auth:20.7.0")
@@ -127,6 +127,4 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.coroutines.test)
     androidTestImplementation(libs.google.truth)
-
-
 }
