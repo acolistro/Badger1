@@ -31,10 +31,12 @@ android {
                 )
             }
         }
+        testInstrumentationRunner = "com.example.badger.HiltTestRunner"
     }
 
     kapt {
         correctErrorTypes = true
+        generateStubs = true
     }
 
     buildTypes {
@@ -47,14 +49,22 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         dataBinding = true
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            all {
+                it.useJUnitPlatform()
+            }
+        }
     }
 }
 
@@ -81,6 +91,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.runner)
     kapt(libs.androidx.room.compiler)
 
     // Coroutines and Activity KTX
@@ -121,10 +132,32 @@ dependencies {
     testImplementation(libs.google.truth)
     testImplementation(libs.app.cash.turbine)
     testImplementation(libs.mockk)
+    testImplementation(libs.robolectric)
+
+    // Hilt testing
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.testing)
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.android.testing)
+    testImplementation(libs.hilt.android)
+    kaptTest(libs.hilt.android.compiler)
+    testImplementation(libs.kotlin.test)
 
     // Android Tests
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.coroutines.test)
     androidTestImplementation(libs.google.truth)
+    androidTestImplementation(libs.hilt.android)
+    kaptAndroidTest(libs.hilt.android.compiler)
+
+    // Timber for logging
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // SQLCipher for database encryption
+    implementation("net.zetetic:android-database-sqlcipher:4.5.3")
+    implementation("androidx.sqlite:sqlite-ktx:2.3.1")
+
+    // Security library for key management
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }
