@@ -1,14 +1,19 @@
 package com.example.badger
 
+import com.example.badger.utils.TestUserManager
 import org.junit.Before
 import org.junit.Rule
+import javax.inject.Inject
 
 abstract class BaseTest {
+    @Inject
+    open lateinit var testUserManager: TestUserManager
+
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    open val mainDispatcherRule = MainDispatcherRule()
 
     @Before
-    fun setup() {
+    open fun setup() {
         // Common test setup
     }
 }
