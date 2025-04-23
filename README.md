@@ -2,7 +2,7 @@
 
 Badger is a secure task and list management app that puts privacy first. With end-to-end encryption, secure notifications, and seamless list sharing, Badger helps you stay organized while keeping your data private.
 
-![](/Users/mallsoft/AndroidStudioProjects/Badger1/app/src/main/res/drawable/badger_cute.png)
+![Badger App](/Users/mallsoft/AndroidStudioProjects/Badger1/app/src/main/res/drawable/badger_cute.png)
 
 ## 🚀 Features
 
@@ -94,19 +94,21 @@ Badger is built using modern Android development practices:
 
 ## 🚧 Development Status
 
-Badger is currently in **Alpha** stage:
-- Core features are functional
-- Security architecture is in place
-- Active development and testing ongoing
-- User interface refinements in progress
+Badger is currently in **Early Development** stage:
+- Core architecture is in place
+- Security framework implementation in progress
+- Active development of features ongoing
+- UI/UX design and implementation underway
 
 ## 🔜 Roadmap
 
-- Comprehensive E2EE audit and validation
-- Additional sharing options
-- Enhanced notification preferences
+- Complete E2EE implementation and testing
+- Implement secure notification system
+- Enhance list sharing capabilities
+- User interface refinements
+- Alpha and beta testing phases
 - iOS version development
-- Public beta release
+- Public release
 
 ## 📋 Requirements
 
@@ -115,7 +117,7 @@ Badger is currently in **Alpha** stage:
 
 ## 💾 Installation
 
-As the app is in alpha stage, it's currently distributed to test users directly. A public release will be available in the future.
+As the app is still in early development, it's not yet available for general installation. A test version will be distributed to selected users during the alpha stage.
 
 ## 🤝 Contributing
 
