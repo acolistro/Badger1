@@ -4,8 +4,6 @@ Badger is a secure task and list management app that puts privacy first. With en
 
 <img src="app/src/main/res/drawable/badger_cute.png" alt="Badger App" width="30%" />
 
-![Badger App](app/src/main/res/drawable/badger_cute.png)
-
 ## 🚀 Features
 
 ### 📝 Task & List Management
