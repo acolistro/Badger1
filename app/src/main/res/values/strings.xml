@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">Badger 1</string>
+    <string name="app_name">Badger</string>
+    <string name="default_web_client_id">842323151021-eehs51854ttmk9mus8fravakl1ran76q.apps.googleusercontent.com</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <!-- Sign Up Strings -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="username">Username</string>
+    <string name="phone">Phone Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="verification_code">Verification Code</string>
+    <!-- Forgot Password -->
+    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password_description">Enter your email address and we\'ll send you a link to reset your password.</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    <string name="back">Back</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
