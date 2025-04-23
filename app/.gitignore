@@ -1,1 +1,16 @@
+# Build folder
 /build
+
+# Firebase configuration
+app/google-services.json
+**/google-services.json
+
+# Local configuration files
+local.properties
+*.iml
+.gradle
+.idea/
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
