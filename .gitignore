@@ -12,4 +12,13 @@
 /captures
 .externalNativeBuild
 .cxx
+# Firebase
+google-services.json
+firebase-config.json
+
+# Local configuration
 local.properties
+gradle.properties
+
+# API keys
+apikey.properties

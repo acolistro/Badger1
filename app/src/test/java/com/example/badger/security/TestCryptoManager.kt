@@ -1,15 +1,14 @@
 package com.example.badger.test.security
 
 import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import com.example.badger.security.CryptoManager
-import org.mockito.Mockito.mock
+import org.mockito.kotlin.mock
 
 /**
  * Test implementation of CryptoManager for predictable encryption/decryption in tests.
- * Instead of actually encrypting, it just adds a prefix/suffix to make the "encrypted" content predictable.
+ * Since the original CryptoManager is final, we use delegation instead of inheritance.
  */
-class TestCryptoManager(context: Context) : CryptoManager(context) {
+class TestCryptoManagerWrapper(private val context: Context) {
 
     companion object {
         private const val ENC_PREFIX = "ENC("
@@ -21,27 +20,27 @@ class TestCryptoManager(context: Context) : CryptoManager(context) {
     private val securePrefs = mutableMapOf<String, String>()
 
     /**
-     * Factory method to create TestCryptoManager with a mock context.
+     * Factory method to create with a mock context
      */
     companion object {
-        fun createWithMockContext(): TestCryptoManager {
-            val mockContext = mock(Context::class.java)
-            return TestCryptoManager(mockContext)
+        fun createWithMockContext(): TestCryptoManagerWrapper {
+            val mockContext = mock<Context>()
+            return TestCryptoManagerWrapper(mockContext)
         }
     }
 
     /**
-     * Override the encryption method to use a predictable pattern
+     * Simulated encryption for testing
      */
-    override fun encryptString(plaintext: String, associatedData: String?): String {
+    fun encryptString(plaintext: String, associatedData: String? = null): String {
         val associatedDataSuffix = associatedData?.let { ":$it" } ?: ""
         return "$ENC_PREFIX$plaintext$associatedDataSuffix$ENC_SUFFIX"
     }
 
     /**
-     * Override the decryption method to reverse our predictable pattern
+     * Simulated decryption for testing
      */
-    override fun decryptString(encryptedText: String, associatedData: String?): String {
+    fun decryptString(encryptedText: String, associatedData: String? = null): String {
         if (!encryptedText.startsWith(ENC_PREFIX) || !encryptedText.endsWith(ENC_SUFFIX)) {
             throw IllegalArgumentException("Invalid test encrypted text format")
         }
@@ -57,16 +56,16 @@ class TestCryptoManager(context: Context) : CryptoManager(context) {
     }
 
     /**
-     * Override key-based encryption for testing
+     * Simulated key-based encryption for testing
      */
-    override fun encryptWithKey(data: String, keyBase64: String): String {
+    fun encryptWithKey(data: String, keyBase64: String): String {
         return "$ENC_PREFIX$data:key=$keyBase64$ENC_SUFFIX"
     }
 
     /**
-     * Override key-based decryption for testing
+     * Simulated key-based decryption for testing
      */
-    override fun decryptWithKey(encryptedData: String, keyBase64: String): String {
+    fun decryptWithKey(encryptedData: String, keyBase64: String): String {
         if (!encryptedData.startsWith(ENC_PREFIX) || !encryptedData.endsWith(ENC_SUFFIX)) {
             throw IllegalArgumentException("Invalid test encrypted data format")
         }
@@ -82,23 +81,23 @@ class TestCryptoManager(context: Context) : CryptoManager(context) {
     }
 
     /**
-     * Override random key generation for predictable tests
+     * Generate a predictable key for testing
      */
-    override fun generateRandomKey(): String {
-        return TEST_KEY_PREFIX + System.currentTimeMillis()
+    fun generateRandomKey(): String {
+        return "$TEST_KEY_PREFIX${System.currentTimeMillis()}"
     }
 
     /**
-     * Override secure preferences retrieval for testing
+     * Get from in-memory preferences for testing
      */
-    override fun getSecurePreference(key: String, defaultValue: String?): String? {
+    fun getSecurePreference(key: String, defaultValue: String? = null): String? {
         return securePrefs[key] ?: defaultValue
     }
 
     /**
-     * Override secure preferences storage for testing
+     * Store in in-memory preferences for testing
      */
-    override fun storeSecurePreference(key: String, value: String) {
+    fun storeSecurePreference(key: String, value: String) {
         securePrefs[key] = value
     }
 }
