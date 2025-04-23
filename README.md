@@ -2,7 +2,7 @@
 
 Badger is a secure task and list management app that puts privacy first. With end-to-end encryption, secure notifications, and seamless list sharing, Badger helps you stay organized while keeping your data private.
 
-![Badger App](/Users/mallsoft/AndroidStudioProjects/Badger1/app/src/main/res/drawable/badger_cute.png)
+![Badger App](app/src/main/res/drawable/badger_cute.png)
 
 ## 🚀 Features
 
